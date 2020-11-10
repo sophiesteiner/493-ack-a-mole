@@ -3,10 +3,10 @@
 <link rel="stylesheet" type="text/css" href="style/style.css">
 
     <div id="splash_screen">
-        
+        <div></div>
     </div>
 
-    <div id="main_screen">
+    <div id="main_screen" onmousemove="move_shovel()">
         <div id="menu_screen">
             <button class="menu_button" id="pause_play"></button>
             <button class="menu_button" id="settings"></button>
@@ -27,11 +27,16 @@
         </div>
         <div id="settings_panel">
             <form id="difficulty">
-
+                <button id="diff_button" id="easy"></button>
+                <button id="diff_button" id="medium"></button>
+                <button id="diff_button" id="hard"></button>
             </form>
-            <form id="time c">
-
+            <form id="time_change">
+                
             </form>
+            <div  id="upload_image">
+                
+            </div>
         </div>
     </div>
 

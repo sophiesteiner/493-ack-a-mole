@@ -6,3 +6,7 @@ Vue.component('mole', {
     },
     template: '<img >'
   })
+
+move_shovel () {
+
+}

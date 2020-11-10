@@ -5,11 +5,12 @@
 .menu_button {
     width : 80px;
     height: 80px;
+    margin: 10px;
 }
 
 #menu_screen {
     padding: 20px;
-
+    width: 260px;
 }
 
 #pause_play {
