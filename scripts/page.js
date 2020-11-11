@@ -1,3 +1,10 @@
+$(function(){
+  setTimeout(function(){
+    $('#splash_screen').fadeOut();
+  }, 3000);
+}) 
+
+/*
 Vue.component('mole', {
     data: function () {
       return {
@@ -10,3 +17,4 @@ Vue.component('mole', {
 move_shovel () {
 
 }
+*/

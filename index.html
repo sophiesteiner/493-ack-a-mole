@@ -1,11 +1,22 @@
 <html>
+    <title>Ack-a-Mole</title>
+<!-- JavaScript -->
+<script src='scripts/jquery.min.js'></script>
 <script src='scripts/page.js'></script>
+
+<!-- CSS -->
 <link rel="stylesheet" type="text/css" href="style/style.css">
 
-    <div id="splash_screen">
-        <div></div>
+<!-- HTML -->
+<div id="splash_screen">
+    
+    <div id="center_box">
+        <div id="welcome"><p>Welcome to</p></div>
+        <div id="title"><p>Ack-a-Mole!</p></div>
+        <div id="authors"><p>An EECS 493 Project by Meredith Allen, Taylor Murray, Jacob Polson, and Sophie Steiner</p></div>
     </div>
-
+</div>
+<body>
     <div id="main_screen" onmousemove="move_shovel()">
         <div id="menu_screen">
             <button class="menu_button" id="pause_play"></button>
@@ -39,6 +50,7 @@
             </div>
         </div>
     </div>
+</body>
 
 
 </html>
