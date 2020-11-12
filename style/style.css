@@ -90,3 +90,59 @@
 #score {
     
 }
+
+.holes {
+    display: grid;
+    grid-template-columns: repeat(4, .5fr);
+    grid-gap: 1em;
+    justify-items: center;
+}
+
+.hole {
+    position: relative;
+    height: 60px;
+    width: 90px;
+    border-radius: 50%;
+    background-color: black;
+    overflow: hidden;
+}
+
+.good_mole {
+    position: absolute;
+    z-index: 1;
+    height: 180px;
+    bottom: -70;
+    left: 50%;
+    transform: translateX(-50%);
+    animation: appear_good 0.8s linear;
+    pointer-events: none;
+}
+
+.bad_mole {
+    position: absolute;
+    z-index: 1;
+    height: 180px;
+    bottom: -70;
+    left: 50%;
+    transform: translateX(-50%);
+    animation: appear_bad 0.8s linear;
+    pointer-events: none;
+}
+
+@keyframes appear_good {
+    from {
+        bottom: -250;
+    }
+    to {
+        bottom: -70;
+    }
+}
+
+@keyframes appear_bad {
+    from {
+        bottom: -240;
+    }
+    to {
+        bottom: -60;
+    }
+}

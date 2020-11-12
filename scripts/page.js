@@ -10,7 +10,9 @@ $(function(){
     $('#splash_screen').fadeOut();
   }, 3000);
 
-
+  let holes = document.querySelectorAll(".hole");
+  let score = $(".score span");
+  let points = 0;
   
   var audio = new Audio("images/Funny-background-music-for-games.mp3");
 
@@ -25,6 +27,36 @@ $(function(){
     }
 
 
+  });
+
+  $("#pause_play").click(function() {
+    let hole;
+    let startGame = setInterval(() => {
+      let random_number = Math.floor(Math.random() * 16);
+      hole = holes[random_number];
+      let image = document.createElement("img");
+      let good_or_bad = Math.floor(Math.random() * 2);
+      if (good_or_bad === 0) {
+        image.setAttribute("src", "images/good_mole.png");
+        image.setAttribute("class", "good_mole");
+      }
+      else if (good_or_bad === 1) {
+        image.setAttribute("src", "images/bad_mole.png");
+        image.setAttribute("class", "bad_mole");
+      }
+      hole.appendChild(image);
+      setTimeout(() => {
+          hole.removeChild(image);
+      }, 1200); 
+      
+    }, 1600);
+
+
+    window.addEventListener("click", (e) => {
+      if (e.target === hole) {
+        score.html(++points);
+      }
+    }) 
   });
 
   
@@ -64,17 +96,3 @@ function change_bad_image(){
   // TODO
   good_bad_fname = "new";
 }
-/*
-Vue.component('mole', {
-    data: function () {
-      return {
-        count: 0
-      }
-    },
-    template: '<img >'
-  })
-
-move_shovel () {
-
-}
-*/
