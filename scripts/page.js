@@ -2,6 +2,9 @@
 let current_difficulty = "easy";
 let good_mole_fname = "images/good_mole.png";
 let bad_mole_fname = "images/bad_mole.png";
+let good_or_bad;
+let good_mole_counter = 0;
+let bad_mole_counter = 0;
 
 
 // MAIN
@@ -35,12 +38,12 @@ $(function(){
       let random_number = Math.floor(Math.random() * 16);
       hole = holes[random_number];
       let image = document.createElement("img");
-      let good_or_bad = Math.floor(Math.random() * 2);
+      good_or_bad = Math.floor(Math.random() * 3);
       if (good_or_bad === 0) {
         image.setAttribute("src", "images/good_mole.png");
         image.setAttribute("class", "good_mole");
       }
-      else if (good_or_bad === 1) {
+      else {
         image.setAttribute("src", "images/bad_mole.png");
         image.setAttribute("class", "bad_mole");
       }
@@ -54,7 +57,17 @@ $(function(){
 
     window.addEventListener("click", (e) => {
       if (e.target === hole) {
-        score.html(++points);
+        if (good_or_bad === 0) {
+          ++good_mole_counter;
+          if (points > 0) {
+          score.html(--points);
+          }
+          console.log("Don't hit the good mole!")
+        }
+        else {
+          ++bad_mole_counter;
+          score.html(++points);
+        }
       }
     }) 
   });
