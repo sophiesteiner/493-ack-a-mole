@@ -20,7 +20,6 @@ $(function(){
   var audio = new Audio("images/Funny-background-music-for-games.mp3");
 
   $("#sound_toggle").click(function() {
-    console.log("ON CLICK")
     if (audio.paused) {
       audio.play();
       $("#sound_toggle img").attr("src", "images/vol_on.png");
@@ -32,7 +31,25 @@ $(function(){
 
   });
 
+  $("#play_area").mousemove(function(e) {
+    let y = e.pageY;
+    let x = e.pageX;
+    let width = $("#shovel").width();
+    let height = $("#shovel").height();
+    $("#shovel").css({top: y - height/2, left: x - width/3});
+  }); 
+
+  $("#play_area").mousedown(function() {
+    $("#shovel").css('transform','rotate(-20deg)');
+  }); 
+
+  $("#play_area").mouseup(function() {
+    $("#shovel").css('transform','rotate(20deg)');
+  }); 
+
+
   $("#pause_play").click(function() {
+    console.log("play")
     let hole;
     let startGame = setInterval(() => {
       let random_number = Math.floor(Math.random() * 16);
@@ -56,6 +73,8 @@ $(function(){
 
 
     window.addEventListener("click", (e) => {
+      console.log("click!")
+      console.log("target",e.target)
       if (e.target === hole) {
         if (good_or_bad === 0) {
           ++good_mole_counter;

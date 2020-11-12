@@ -38,6 +38,7 @@
 }
 
 .settings_panel {
+    z-index: 200;
     display: none;
     align-items: center;
     flex-direction: column;
@@ -145,4 +146,12 @@
     to {
         bottom: -60;
     }
+}
+
+#shovel {
+    position: fixed;
+    z-index: 100;
+    width: 128px;
+    height: 120px;
+    pointer-events: none;
 }
