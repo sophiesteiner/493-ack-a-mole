@@ -17,11 +17,17 @@
     </div>
 </div>
 <body>
-    <div id="main_screen" onmousemove="move_shovel()">
+    <div id="main_screen">
         <div id="menu_screen">
-            <button class="menu_button" id="pause_play"></button>
-            <button class="menu_button" id="settings"></button>
-            <button class="menu_button" id="sound_toggle"></button>
+            <button class="menu_button" id="pause_play">
+                <img src="images/pause_button.png">
+            </button>
+            <button class="menu_button" id="settings" onclick="settings_open()">
+                <img src="images/settingsgear.png">
+            </button>
+            <button class="menu_button" id="sound_toggle">
+                <img src="images/vol_off.png">
+            </button>
         </div>
         <div id="session_info">
             <div id="countdown_timer">
