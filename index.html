@@ -22,7 +22,7 @@
             <button class="menu_button" id="pause_play">
                 <img src="images/pause_button.png">
             </button>
-            <button class="menu_button" id="settings" onclick="settings_open()">
+            <button class="menu_button" id="settings">
                 <img src="images/settingsgear.png">
             </button>
             <button class="menu_button" id="sound_toggle">
@@ -41,6 +41,7 @@
         <div id="play_area">
             <img id="shovel" src="images/shovel.png">
             <div class="holes">
+                <div class="hole" id="hole0"></div>
                 <div class="hole" id="hole1"></div>
                 <div class="hole" id="hole2"></div>
                 <div class="hole" id="hole3"></div>
@@ -56,16 +57,15 @@
                 <div class="hole" id="hole13"></div>
                 <div class="hole" id="hole14"></div>
                 <div class="hole" id="hole15"></div>
-                <div class="hole" id="hole16"></div>
             </div>   
         </div>
         <div class="settings_panel">
             Settings Panel
             <form id="difficulty">
                 Difficulty:
-                <button class="diff_button" id="easy" onclick="set_easy()">Easy</button>
-                <button class="diff_button" id="medium" onclick="set_medium()">Medium</button>
-                <button class="diff_button" id="hard" onclick="set_hard()">Hard</button>
+                <button type="button" id="easy">Easy</button>
+                <button type="button" id="medium">Medium</button>
+                <button type="button" id="hard">Hard</button>
             </form>
             <form id="time_change">
                 <label for="time_in">Time:</label>

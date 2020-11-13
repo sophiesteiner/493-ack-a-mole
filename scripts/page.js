@@ -13,6 +13,24 @@ $(function(){
     $('#splash_screen').fadeOut();
   }, 3000);
 
+  $("#settings").click(() => {
+    if($('.settings_panel').css("display") === "none"){
+      $('.settings_panel').css("display", "flex");
+    }
+    else{
+      $('.settings_panel').css("display", "none");
+    }
+  });
+  $("#easy").click(() => {
+    current_difficulty = "easy";
+  });
+  $("#medium").click(() => {
+    current_difficulty ="medium";
+  });
+  $("#hard").click(() => {
+    current_difficulty = "hard";
+  });
+
   let holes = document.querySelectorAll(".hole");
   let score = $(".score span");
   let points = 0;
@@ -50,24 +68,43 @@ $(function(){
 
   $("#pause_play").click(function() {
     console.log("play")
-    let hole;
+    
+    let time_before_mole_disappeares = 3600;
+    let good_mole_percentage_inverse = -1;
+    if (current_difficulty === "hard") {
+      time_before_mole_disappeares = 1000;
+      good_mole_percentage_inverse = 2;
+    } else if (current_difficulty === "medium") {
+      time_before_mole_disappeares = 2400;
+      good_mole_percentage_inverse = 3;
+    }
+
     let startGame = setInterval(() => {
       let random_number = Math.floor(Math.random() * 16);
-      hole = holes[random_number];
+      console.log("adding image to hole", random_number)
+      let hole = holes[random_number];
       let image = document.createElement("img");
-      good_or_bad = Math.floor(Math.random() * 3);
+
+      good_or_bad = Math.floor(Math.random() * good_mole_percentage_inverse);
       if (good_or_bad === 0) {
+        console.log("making good mole");
         image.setAttribute("src", "images/good_mole.png");
         image.setAttribute("class", "good_mole");
       }
       else {
+        console.log("making bad mole");
         image.setAttribute("src", "images/bad_mole.png");
         image.setAttribute("class", "bad_mole");
       }
       hole.appendChild(image);
       setTimeout(() => {
-          hole.removeChild(image);
-      }, 1200); 
+          console.log("in timeout!", hole)
+          if (hole.childNodes.length > 0) {
+            console.log("we have a child!", hole.childNodes[0])
+            hole.removeChild(hole.childNodes[0]);
+            console.log("deleted child", hole.childNodes)
+          }
+      }, time_before_mole_disappeares); 
       
     }, 1600);
 
@@ -75,7 +112,7 @@ $(function(){
     window.addEventListener("click", (e) => {
       console.log("click!")
       console.log("target",e.target)
-      if (e.target === hole) {
+      if (e.target.classList.contains('hole')) {
         if (good_or_bad === 0) {
           ++good_mole_counter;
           if (points > 0) {
@@ -87,37 +124,15 @@ $(function(){
           ++bad_mole_counter;
           score.html(++points);
         }
+
+        setTimeout(() => {
+          console.log(e.target.childNodes)
+          e.target.removeChild(e.target.childNodes[0]);
+        }, 100); 
       }
     }) 
   });
-
-  
-
-
 }) 
-
-// SETTINGS TIME
-
-function settings_open(){
-  if($('.settings_panel').css("display") === "none"){
-    $('.settings_panel').css("display", "flex");
-  }
-  else{
-    $('.settings_panel').css("display", "none");
-  }
-}
-
-function set_easy(){
-  current_difficulty = "easy";
-}
-
-function set_medium(){
-  current_difficulty = "medium";
-}
-
-function set_hard(){
-  current_difficulty = "hard";
-}
 
 function change_good_image(){
   // TODO
