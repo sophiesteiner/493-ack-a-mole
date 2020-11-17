@@ -1,10 +1,23 @@
 // GLOBALS
-let current_difficulty = "easy";
+
+//upload globals
 let good_mole_fname = "images/good_mole.png";
 let bad_mole_fname = "images/bad_mole.png";
+
+//game globals
 let good_or_bad;
 let good_mole_counter = 0;
 let bad_mole_counter = 0;
+
+//settings globals
+let current_difficulty = "easy";
+let settings_show = false;
+let difficulty_dict = {
+  "hard": "red",
+  "medium": "yellow",
+  "easy": "green"
+};
+let selected_color = "blue";
 
 
 // MAIN
@@ -14,21 +27,46 @@ $(function(){
   }, 3000);
 
   $("#settings").click(() => {
-    if($('.settings_panel').css("display") === "none"){
-      $('.settings_panel').css("display", "flex");
+    //show selected difficulty button
+    $('#'+current_difficulty).css('border-color',selected_color);
+
+    if(settings_show === false){
+      $('.settings_panel').fadeIn();
+      settings_show = true;
     }
     else{
-      $('.settings_panel').css("display", "none");
+      $('.settings_panel').fadeOut();
+      settings_show = false;
     }
   });
+
   $("#easy").click(() => {
+    //reset old selected
+    $('#'+current_difficulty).css('border-color',difficulty_dict[current_difficulty]);
+
     current_difficulty = "easy";
+
+    //set new selected
+    $('#'+current_difficulty).css('border-color',selected_color);
+
   });
   $("#medium").click(() => {
-    current_difficulty ="medium";
+    //reset old selected
+    $('#'+current_difficulty).css('border-color',difficulty_dict[current_difficulty]);
+
+    current_difficulty = "medium";
+
+    //set new selected
+    $('#'+current_difficulty).css('border-color',selected_color);
   });
   $("#hard").click(() => {
+    //reset old selected
+    $('#'+current_difficulty).css('border-color',difficulty_dict[current_difficulty]);
+
     current_difficulty = "hard";
+
+    //set new selected
+    $('#'+current_difficulty).css('border-color',selected_color);
   });
 
   let holes = document.querySelectorAll(".hole");

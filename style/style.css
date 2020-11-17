@@ -25,6 +25,7 @@
     opacity: 0.6;
     margin-left: 200px;
     margin-right: 200px;
+    border-radius: 5px;
 }
 
 #welcome{
@@ -37,20 +38,24 @@
     font-size: 18px;
 }
 
+.play_area{
+    position: absolute;
+}
 .settings_panel {
     z-index: 200;
     display: none;
+    position: absolute;
     align-items: center;
-    flex-direction: column;
-    text-align: center;
-    font-size: 40px;
+    text-align: left;
+    font-size: 20px;
     border-style: solid;
     border-width: 3px;
     border-color: #2C4762;
-    background-color: white;
-    opacity: 0.6;
+    background-color: lightgray;
     margin-left: 200px;
     margin-right: 200px;
+    padding: 20px;
+    border-radius: 5px;
 }
 
 .menu_button {
@@ -68,14 +73,29 @@
 
 #easy {
     background-color: green;
+    border-width: 2px;
+    border-color: green;
+    padding: 8px;
+    color: black;
+    border-radius: 5px;
 }
 
 #medium {
     background-color: yellow;
+    border-width: 2px;
+    border-color: yellow;
+    padding: 8px;
+    color: black;
+    border-radius: 5px;
 }
 
 #hard {
     background-color: red;
+    border-width: 2px;
+    border-color: red;
+    padding: 8px;
+    color: black;
+    border-radius: 5px;
 
 }
 
