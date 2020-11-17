@@ -69,6 +69,36 @@ $(function(){
     $('#'+current_difficulty).css('border-color',selected_color);
   });
 
+  $('#good_img_in').click(() => {
+    let good_file_obj = $('#good_file').prop('files')[0];
+    if(good_file_obj){
+      const reader = new FileReader();
+
+      reader.addEventListener("load", function () {
+        $('#img1').attr('src', this.result);
+      });
+
+      reader.readAsDataURL(good_file_obj);
+    }
+
+    good_mole_fname = $('#good_file').prop('files')[0].name;
+  });
+
+  $('#bad_img_in').click(() => {
+    let bad_file_obj = $('#bad_file').prop('files')[0];
+    if(bad_file_obj){
+      const reader = new FileReader();
+
+      reader.addEventListener("load", function () {
+        $('#img2').attr('src', this.result);
+      });
+
+      reader.readAsDataURL(bad_file_obj);
+    }
+    
+    bad_mole_fname = $('#bad_file').prop('files')[0].name;
+  });
+
   let holes = document.querySelectorAll(".hole");
   let score = $(".score span");
   let points = 0;
@@ -172,12 +202,3 @@ $(function(){
   });
 }) 
 
-function change_good_image(){
-  // TODO
-  good_mole_fname = "new";
-}
-
-function change_bad_image(){
-  // TODO
-  good_bad_fname = "new";
-}

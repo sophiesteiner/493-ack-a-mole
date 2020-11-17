@@ -69,17 +69,18 @@
             </form>
             <form id="time_change">
                 <label for="time_in">Time:</label>
-                <input type="number" name="time_in" value="100">
+                <input type="number" name="time_in" id="yay_time" value="100">
             </form>
-            <form action="./upload.php" method="post" enctype="multipart/form-data">
+            <form>
                 Upload Good Mole:
-                <input type="file" name="fileToUpload" id="fileToUpload">
-                <input type="submit" value="Upload Image" name="submit" onclick="change_good_image()">
+                <input type="file" name="fileToUpload" id="good_file">
+                <input type="submit" value="Upload Image" name="submit" id="good_img_in">
             </form>
-            <form action="./upload.php" method="post" enctype="multipart/form-data">
+            <img id="img1" src="images/play_button.png">
+            <form>
                 Upload Bad Mole:
-                <input type="file" name="fileToUpload" id="fileToUpload">
-                <input type="submit" value="Upload Image" name="submit" onclick="change_bad_image()">
+                <input type="file" name="fileToUpload" id="bad_file">
+                <input type="submit" value="Upload Image" name="submit" id="bad_img_in">
             </form>
         </div>
     </div>
