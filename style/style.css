@@ -45,7 +45,9 @@
 .settings_panel {
     z-index: 200;
     display: none;
-    position: absolute;
+    position: fixed;
+    left: 100px;
+    top: 100px;
     align-items: center;
     text-align: left;
     font-size: 20px;
