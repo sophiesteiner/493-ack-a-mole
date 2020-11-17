@@ -31,6 +31,7 @@
 #welcome{
 
 }
+
 #title{
    
 }
@@ -104,12 +105,21 @@
     width: 350px;
 }
 
+#session_info {
+    display: flex;
+    align-items: right;
+}
+
 #countdown_timer {
     
 }
 
 #score {
     
+}
+
+#session_info{
+
 }
 
 .holes {
