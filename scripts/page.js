@@ -157,28 +157,28 @@ $(document).ready( function(){
 
       var startGame = setInterval(() => {
         let random_number = Math.floor(Math.random() * 16);
-        console.log("adding image to hole", random_number)
+        // console.log("adding image to hole", random_number)
         let hole = holes[random_number];
         let image = document.createElement("img");
   
         good_or_bad = Math.floor(Math.random() * good_mole_percentage_inverse);
         if (good_or_bad === 0) {
-          console.log("making good mole");
+          // console.log("making good mole");
           image.setAttribute("src", "images/good_mole.png");
           image.setAttribute("class", "good_mole");
         }
         else {
-          console.log("making bad mole");
+          // console.log("making bad mole");
           image.setAttribute("src", "images/bad_mole.png");
           image.setAttribute("class", "bad_mole");
         }
         hole.appendChild(image);
         setTimeout(() => {
-            console.log("in timeout!", hole)
+            // console.log("in timeout!", hole)
             if (hole.childNodes.length > 0) {
               console.log("we have a child!", hole.childNodes[0])
               hole.removeChild(hole.childNodes[0]);
-              console.log("deleted child", hole.childNodes)
+              // console.log("deleted child", hole.childNodes)
             }
         }, time_before_mole_disappeares); 
         
@@ -186,23 +186,21 @@ $(document).ready( function(){
   
   
       window.addEventListener("click", (e) => {
-        console.log("click!")
         console.log("target",e.target)
-        if (e.target.classList.contains('hole')) {
+        if (e.target.children.length > 0) {
           if (good_or_bad === 0) {
             ++good_mole_counter;
             if (points > 0) {
             score.html(--points);
             }
-            console.log("Don't hit the good mole!")
+            // console.log("Don't hit the good mole!")
           }
           else {
             ++bad_mole_counter;
             score.html(++points);
           }
-  
           setTimeout(() => {
-            console.log(e.target.childNodes)
+            // console.log(e.target.childNodes)
             e.target.removeChild(e.target.childNodes[0]);
           }, 100); 
         }
