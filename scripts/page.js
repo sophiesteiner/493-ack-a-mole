@@ -22,12 +22,13 @@ let selected_color = "blue";
 //check if game is running
 let playing = false;
 
-// MAIN
-$(function(){
-  setTimeout(function(){
-    $('#splash_screen').fadeOut();
-  }, 3000);
+//splash screen
+setTimeout(function(){
+  $('#splash_screen').fadeOut();
+}, 3000);
 
+// MAIN
+$(document).ready( function(){
   $("#settings").click(() => {
     //show selected difficulty button
     $('#'+current_difficulty).css('border-color',selected_color);
@@ -154,7 +155,7 @@ $(function(){
         $("#time_left").html("4");
        }, 1000);*/
 
-      let startGame = setInterval(() => {
+      var startGame = setInterval(() => {
         let random_number = Math.floor(Math.random() * 16);
         console.log("adding image to hole", random_number)
         let hole = holes[random_number];
@@ -209,9 +210,9 @@ $(function(){
     }
     //if game is currently in play
     else{
-      console.log("pausing...");
-      playing = false;
-      time_before_mole_disappeares = 0;
+      console.log("pausing gameplay...");
+      playing = true;      
+      //clearInterval(startGame);
     }
   });
 }) 

@@ -7,9 +7,8 @@
     height: 100%;
     background-image: url('../images/splash_screen_background.png');
     z-index: 1001;
-    color: darkcyan;
+    color: rgb(55, 105, 112);
     opacity: 1;
-    
 }
 
 #center_box {
@@ -21,8 +20,7 @@
     border-style: solid;
     border-width: 3px;
     border-color: #2C4762;
-    background-color: white;
-    opacity: 0.6;
+    background-color:rgb(222, 234, 236, 0.7);
     margin-left: 200px;
     margin-right: 200px;
     border-radius: 5px;
