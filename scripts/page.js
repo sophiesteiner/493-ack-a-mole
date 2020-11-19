@@ -192,7 +192,7 @@ $(document).ready( function(){
           setTimeout(() => {
               // console.log("in timeout!", hole)
               if (hole.childNodes.length > 0) {
-                console.log("we have a child!", hole.childNodes[0])
+                // console.log("we have a child!", hole.childNodes[0])
                 hole.removeChild(hole.childNodes[0]);
                 // console.log("deleted child", hole.childNodes)
               }
@@ -203,7 +203,7 @@ $(document).ready( function(){
     
         window.addEventListener("click", (e) => {
           console.log("target",e.target)
-          if (e.target.children.length > 0) {
+          if (e.target.classList.contains("hole") && e.target.children.length > 0) {
             if (good_or_bad === 0) {
               ++good_mole_counter;
               if (points > 0) {
