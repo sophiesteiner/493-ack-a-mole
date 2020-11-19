@@ -8,6 +8,8 @@ let bad_mole_fname = "images/bad_mole.png";
 let good_or_bad;
 let good_mole_counter = 0;
 let bad_mole_counter = 0;
+let time_before_mole_disappeares = 3600;
+let good_mole_percentage_inverse = -1;
 
 //settings globals
 let current_difficulty = "easy";
@@ -18,11 +20,13 @@ let difficulty_dict = {
   "easy": "green"
 };
 let selected_color = "blue";
+let time_remaining = 100;
 
 //check if game is running
 let playing = false;
 let startedGame = false;
 var startGame;
+var countdownTimer;
 
 //splash screen
 setTimeout(function(){
@@ -49,7 +53,13 @@ $(document).ready( function(){
     // }
   });
 
+  let timer = $(".countdown_timer span");
+
   $("#begin_game").click(() => {
+    //make note of time input
+    time_remaining = document.getElementById("yay_time").value;
+    console.log("user gameplay length: ", time_remaining);
+    timer.html(time_remaining);
     // fade settings out
     $('.settings_panel').fadeOut();
   });
@@ -116,6 +126,7 @@ $(document).ready( function(){
   let holes = document.querySelectorAll(".hole");
   let score = $(".score span");
   let points = 0;
+
   
   var audio = new Audio("images/Funny-background-music-for-games.mp3");
 
@@ -148,15 +159,13 @@ $(document).ready( function(){
   }); 
 
   $("#pause_play").click(function() {
-    console.log("play")
-
+    console.log("clicked play/pause")
     //if new gameplay session:
     if(startedGame == false && playing == false){
-      console.log("entering loop..");
-      startedGame == true;
+      console.log("beginning gameplay...");
+      startedGame = true;
       playing = true;
-      let time_before_mole_disappeares = 3600;
-      let good_mole_percentage_inverse = -1;
+
       if (current_difficulty === "hard") {
         time_before_mole_disappeares = 1000;
         good_mole_percentage_inverse = 2;
@@ -165,85 +174,97 @@ $(document).ready( function(){
         good_mole_percentage_inverse = 3;
       }
 
-      //update timer somehow
-      /*let countdownTimer = setInterval(() => {
-        $("#time_left").html("4");
-       }, 1000);*/
-
-      //var startSession = setInterval(() => {
-        startGame = setInterval(() => {
-          let random_number = Math.floor(Math.random() * 16);
-          // console.log("adding image to hole", random_number)
-          let hole = holes[random_number];
-          let image = document.createElement("img");
-    
-          good_or_bad = Math.floor(Math.random() * good_mole_percentage_inverse);
-          if (good_or_bad === 0) {
-            // console.log("making good mole");
-            image.setAttribute("src", "images/good_mole.png");
-            image.setAttribute("class", "good_mole");
-          }
-          else {
-            // console.log("making bad mole");
-            image.setAttribute("src", "images/bad_mole.png");
-            image.setAttribute("class", "bad_mole");
-          }
-          hole.appendChild(image);
-          setTimeout(() => {
-              
-              if (hole.childNodes && hole.childNodes.length > 0 && hole.childNodes[0].tagName == "IMG") {
-                
-                hole.removeChild(hole.childNodes[0]);
-                // console.log("deleted child", hole.childNodes)
-              }
-          }, time_before_mole_disappeares); 
-          
-        }, 1600);
-    
-    
-        window.addEventListener("click", (e) => {
-          console.log("target",e.target)
-          if (e.target.classList.contains("hole") && e.target.children.length > 0) {
-            let pointsIncrementDisplay = document.createElement("div");
-            if (e.target.childNodes[0].classList.contains("good_mole")) {
-              ++good_mole_counter;
-              points -= 10
-              score.html(points);
-              
-              pointsIncrementDisplay.innerHTML = "-10";
-              // console.log("Don't hit the good mole!")
-            } else if(e.target.childNodes[0].classList.contains("bad_mole")) {
-              ++bad_mole_counter;
-              points += 10
-              score.html(points);
-              pointsIncrementDisplay.innerHTML = "+10";
-            }
-            pointsIncrementDisplay.setAttribute("class", "pointsClass");
-            e.target.appendChild(pointsIncrementDisplay);
-
-            setTimeout(() => {
-              console.log("first deleting:",e.target.childNodes)
-              e.target.removeChild(e.target.childNodes[0]);
-            }, 100);
-            
-            setTimeout(() => {
-              console.log("second delete:",e.target, e.target.childNodes)
-              e.target.removeChild(e.target.childNodes[0]);
-            }, 1000);
-          }
-        })
-      //}, 30000);
+      session();
     }
-    /*
+    
     //if game has been started and user wants to pause:
     else if(startedGame == true && playing == true){
-
+      console.log("pausing gameplay...");   
+      playing = false;
+      clearInterval(startGame); 
+      clearInterval(countdownTimer);
     }
+
     //if game has been started, paused, and now user wants to resume:
     else{
-      console.log("pausing gameplay...");   
-      clearInterval(startGame); 
-    }*/
+      console.log("resuming gameplay...");
+      session();
+    }
   });
+
+  //gameplay controller
+  function session(){
+    //countdown time til end
+    countdownTimer = setInterval(() => {
+      --time_remaining;
+      timer.html(time_remaining);
+      if(time_remaining == 0){
+        clearInterval(startGame);
+        clearInterval(countdownTimer);
+      }
+    }, 1000);
+
+    startGame = setInterval(() => {
+      let random_number = Math.floor(Math.random() * 16);
+      // console.log("adding image to hole", random_number)
+      let hole = holes[random_number];
+      let image = document.createElement("img");
+
+      good_or_bad = Math.floor(Math.random() * good_mole_percentage_inverse);
+      if (good_or_bad === 0) {
+        // console.log("making good mole");
+        image.setAttribute("src", "images/good_mole.png");
+        image.setAttribute("class", "good_mole");
+      }
+      else {
+        // console.log("making bad mole");
+        image.setAttribute("src", "images/bad_mole.png");
+        image.setAttribute("class", "bad_mole");
+      }
+      hole.appendChild(image);
+      setTimeout(() => {
+          
+          if (hole.childNodes && hole.childNodes.length > 0 && hole.childNodes[0].tagName == "IMG") {
+            
+            hole.removeChild(hole.childNodes[0]);
+            // console.log("deleted child", hole.childNodes)
+          }
+      }, time_before_mole_disappeares); 
+      
+    }, 1600);
+
+
+    window.addEventListener("click", (e) => {
+      console.log("target",e.target)
+      if (e.target.classList.contains("hole") && e.target.children.length > 0) {
+        let pointsIncrementDisplay = document.createElement("div");
+        if (e.target.childNodes[0].classList.contains("good_mole")) {
+          ++good_mole_counter;
+          points -= 10
+          score.html(points);
+          
+          pointsIncrementDisplay.innerHTML = "-10";
+          // console.log("Don't hit the good mole!")
+        } else if(e.target.childNodes[0].classList.contains("bad_mole")) {
+          ++bad_mole_counter;
+          points += 10
+          score.html(points);
+          pointsIncrementDisplay.innerHTML = "+10";
+        }
+        pointsIncrementDisplay.setAttribute("class", "pointsClass");
+        e.target.appendChild(pointsIncrementDisplay);
+
+        setTimeout(() => {
+          console.log("first deleting:",e.target.childNodes)
+          e.target.removeChild(e.target.childNodes[0]);
+        }, 100);
+        
+        setTimeout(() => {
+          console.log("second delete:",e.target, e.target.childNodes)
+          e.target.removeChild(e.target.childNodes[0]);
+        }, 1000);
+      }
+    });
+  }
 }) 
 

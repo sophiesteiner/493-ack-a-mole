@@ -33,7 +33,7 @@
             </form>
             <form id="time_change">
                 <label for="time_in">Time:</label>
-                <input type="number" name="time_in" id="yay_time" value="100">
+                <input type="number" name="time_in" id="yay_time" min="5" value="100">
             </form>
             <div class="uploads">
                 <div id="good_mole_upload">
@@ -68,8 +68,8 @@
                 </button>            
             </div>
             <div id="session_info">
-                <div id="countdown_timer">
-                <!-- Time Remaining: <div id="time_left">0</div>-->
+                <div class="countdown_timer">
+                Time Remaining: <span>0</span>
                 </div>
                 <div class="score">
                     Points: <span>0</span>
