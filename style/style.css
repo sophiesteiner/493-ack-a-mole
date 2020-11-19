@@ -58,6 +58,10 @@
     padding: 20px;
     border-radius: 5px;
 }
+.settings_panel img {
+    width: 200px;
+    height: 200px;
+}
 
 .menu_button {
     width : 80px;
