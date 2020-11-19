@@ -44,7 +44,7 @@
     z-index: 200;
     display: none;
     position: fixed;
-    left: 100px;
+    left: 60px;
     top: 100px;
     align-items: center;
     text-align: left;
@@ -55,7 +55,7 @@
     background-color: lightgray;
     margin-left: 200px;
     margin-right: 200px;
-    padding: 20px;
+    padding: 30px;
     border-radius: 5px;
 }
 .settings_panel img {
@@ -76,32 +76,54 @@
     object-fit: contain;
 }
 
+#begin_game_div {
+    text-align: center;
+}
+
+#begin_game {
+    padding: 12px;
+    color: black;
+    border-radius: 5px;
+    font-size: 16px;
+    margin: 10px;
+}
+
+
 #easy {
     background-color: green;
     border-width: 2px;
     border-color: green;
-    padding: 8px;
+    padding: 12px;
     color: black;
     border-radius: 5px;
+    font-size: 16px;
+    margin: 10px;
 }
 
 #medium {
     background-color: yellow;
     border-width: 2px;
     border-color: yellow;
-    padding: 8px;
+    padding: 12px;
     color: black;
     border-radius: 5px;
+    font-size: 16px;
+    margin: 10px;
 }
 
 #hard {
     background-color: red;
     border-width: 2px;
     border-color: red;
-    padding: 8px;
+    padding: 12px;
     color: black;
     border-radius: 5px;
+    font-size: 16px;
+    margin: 10px;
+}
 
+.uploads {
+    display: flex;
 }
 
 #menu_screen {

@@ -11,7 +11,7 @@ let bad_mole_counter = 0;
 
 //settings globals
 let current_difficulty = "easy";
-let settings_show = false;
+// let settings_show = false;
 let difficulty_dict = {
   "hard": "red",
   "medium": "yellow",
@@ -25,6 +25,10 @@ let playing = false;
 //splash screen
 setTimeout(function(){
   $('#splash_screen').fadeOut();
+  $('.settings_panel').fadeIn();
+
+  //show selected difficulty button
+  $('#'+current_difficulty).css('border-color',selected_color);
 }, 3000);
 
 // MAIN
@@ -33,16 +37,21 @@ $(document).ready( function(){
     //show selected difficulty button
     $('#'+current_difficulty).css('border-color',selected_color);
 
-    if(settings_show === false){
-      $('.settings_panel').fadeIn();
-      settings_show = true;
-    }
-    else{
-      $('.settings_panel').fadeOut();
-      settings_show = false;
-    }
+    // if(settings_show === false){
+    //   $('.settings_panel').fadeIn();
+    //   settings_show = true;
+    // }
+    // else{
+    //   $('.settings_panel').fadeOut();
+    //   settings_show = false;
+    // }
   });
 
+  $("#begin_game").click(() => {
+    // fade settings out
+    $('.settings_panel').fadeOut();
+  });
+  
   $("#easy").click(() => {
     //reset old selected
     $('#'+current_difficulty).css('border-color',difficulty_dict[current_difficulty]);
@@ -71,7 +80,7 @@ $(document).ready( function(){
     //set new selected
     $('#'+current_difficulty).css('border-color',selected_color);
   });
-
+  
   $('#good_img_in').click(() => {
     let good_file_obj = $('#good_file').prop('files')[0];
     if(good_file_obj){
