@@ -216,3 +216,12 @@ body {
     background-image: url('../images/game_background.png');
     height: 100%;
 }
+
+.pointsClass {
+    font-size: 30px;
+    color: azure;
+    font-family: 'Press Start 2P', cursive;
+    text-align: center;
+    padding-top: 20px;
+    z-index: 500;
+}

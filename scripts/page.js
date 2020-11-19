@@ -190,9 +190,9 @@ $(document).ready( function(){
           }
           hole.appendChild(image);
           setTimeout(() => {
-              // console.log("in timeout!", hole)
-              if (hole.childNodes.length > 0) {
-                // console.log("we have a child!", hole.childNodes[0])
+              
+              if (hole.childNodes && hole.childNodes.length > 0 && hole.childNodes[0].tagName == "IMG") {
+                
                 hole.removeChild(hole.childNodes[0]);
                 // console.log("deleted child", hole.childNodes)
               }
@@ -204,25 +204,35 @@ $(document).ready( function(){
         window.addEventListener("click", (e) => {
           console.log("target",e.target)
           if (e.target.classList.contains("hole") && e.target.children.length > 0) {
-            if (good_or_bad === 0) {
+            let pointsIncrementDisplay = document.createElement("div");
+            if (e.target.childNodes[0].classList.contains("good_mole")) {
               ++good_mole_counter;
-              if (points > 0) {
-              score.html(--points);
-              }
+              points -= 10
+              score.html(points);
+              
+              pointsIncrementDisplay.innerHTML = "-10";
               // console.log("Don't hit the good mole!")
-            }
-            else {
+            } else if(e.target.childNodes[0].classList.contains("bad_mole")) {
               ++bad_mole_counter;
-              score.html(++points);
+              points += 10
+              score.html(points);
+              pointsIncrementDisplay.innerHTML = "+10";
             }
+            pointsIncrementDisplay.setAttribute("class", "pointsClass");
+            e.target.appendChild(pointsIncrementDisplay);
+
             setTimeout(() => {
-              // console.log(e.target.childNodes)
+              console.log("first deleting:",e.target.childNodes)
               e.target.removeChild(e.target.childNodes[0]);
-            }, 100); 
+            }, 100);
+            
+            setTimeout(() => {
+              console.log("second delete:",e.target, e.target.childNodes)
+              e.target.removeChild(e.target.childNodes[0]);
+            }, 1000);
           }
         })
       //}, 30000);
-      
     }
     /*
     //if game has been started and user wants to pause:
