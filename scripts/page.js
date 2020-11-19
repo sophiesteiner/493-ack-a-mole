@@ -54,15 +54,9 @@ $(document).ready( function(){
   });
 
   let timer = $(".countdown_timer span");
-
-  $("#begin_game").click(() => {
-    //make note of time input
-    time_remaining = document.getElementById("yay_time").value;
-    console.log("user gameplay length: ", time_remaining);
-    timer.html(time_remaining);
-    // fade settings out
-    $('.settings_panel').fadeOut();
-  });
+  let holes = document.querySelectorAll(".hole");
+  let score = $(".score span");
+  let points = 0;
   
   $("#easy").click(() => {
     //reset old selected
@@ -123,10 +117,6 @@ $(document).ready( function(){
     bad_mole_fname = $('#bad_file').prop('files')[0].name;
   });
 
-  let holes = document.querySelectorAll(".hole");
-  let score = $(".score span");
-  let points = 0;
-
   
   var audio = new Audio("images/Funny-background-music-for-games.mp3");
 
@@ -158,27 +148,34 @@ $(document).ready( function(){
     $("#shovel").css('transform','rotate(20deg)');
   }); 
 
+  $("#begin_game").click(() => {
+    //make note of time input
+    time_remaining = document.getElementById("yay_time").value;
+    console.log("user gameplay length: ", time_remaining);
+    timer.html(time_remaining);
+    
+    // fade settings out
+    $('.settings_panel').fadeOut();
+    
+    //begin game
+    console.log("beginning gameplay...");
+    startedGame = true;
+    playing = true;
+
+    if (current_difficulty === "hard") {
+      time_before_mole_disappeares = 1000;
+      good_mole_percentage_inverse = 2;
+    } else if (current_difficulty === "medium") {
+      time_before_mole_disappeares = 2400;
+      good_mole_percentage_inverse = 3;
+    }
+
+    session();
+  });
+
   $("#pause_play").click(function() {
     console.log("clicked play/pause")
-    //if new gameplay session:
-    if(startedGame == false && playing == false){
-      console.log("beginning gameplay...");
-      startedGame = true;
-      playing = true;
-
-      if (current_difficulty === "hard") {
-        time_before_mole_disappeares = 1000;
-        good_mole_percentage_inverse = 2;
-      } else if (current_difficulty === "medium") {
-        time_before_mole_disappeares = 2400;
-        good_mole_percentage_inverse = 3;
-      }
-
-      session();
-    }
-    
-    //if game has been started and user wants to pause:
-    else if(startedGame == true && playing == true){
+    if(startedGame == true && playing == true){
       console.log("pausing gameplay...");   
       playing = false;
       clearInterval(startGame); 
@@ -188,6 +185,7 @@ $(document).ready( function(){
     //if game has been started, paused, and now user wants to resume:
     else{
       console.log("resuming gameplay...");
+      playing = true;
       session();
     }
   });
