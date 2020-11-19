@@ -21,6 +21,8 @@ let selected_color = "blue";
 
 //check if game is running
 let playing = false;
+let startedGame = false;
+var startGame;
 
 //splash screen
 setTimeout(function(){
@@ -147,7 +149,11 @@ $(document).ready( function(){
 
   $("#pause_play").click(function() {
     console.log("play")
-    if(playing == false){
+
+    //if new gameplay session:
+    if(startedGame == false && playing == false){
+      console.log("entering loop..");
+      startedGame == true;
       playing = true;
       let time_before_mole_disappeares = 3600;
       let good_mole_percentage_inverse = -1;
@@ -164,63 +170,70 @@ $(document).ready( function(){
         $("#time_left").html("4");
        }, 1000);*/
 
-      var startGame = setInterval(() => {
-        let random_number = Math.floor(Math.random() * 16);
-        // console.log("adding image to hole", random_number)
-        let hole = holes[random_number];
-        let image = document.createElement("img");
-  
-        good_or_bad = Math.floor(Math.random() * good_mole_percentage_inverse);
-        if (good_or_bad === 0) {
-          // console.log("making good mole");
-          image.setAttribute("src", "images/good_mole.png");
-          image.setAttribute("class", "good_mole");
-        }
-        else {
-          // console.log("making bad mole");
-          image.setAttribute("src", "images/bad_mole.png");
-          image.setAttribute("class", "bad_mole");
-        }
-        hole.appendChild(image);
-        setTimeout(() => {
-            // console.log("in timeout!", hole)
-            if (hole.childNodes.length > 0) {
-              console.log("we have a child!", hole.childNodes[0])
-              hole.removeChild(hole.childNodes[0]);
-              // console.log("deleted child", hole.childNodes)
-            }
-        }, time_before_mole_disappeares); 
-        
-      }, 1600);
-  
-  
-      window.addEventListener("click", (e) => {
-        console.log("target",e.target)
-        if (e.target.children.length > 0) {
+      //var startSession = setInterval(() => {
+        startGame = setInterval(() => {
+          let random_number = Math.floor(Math.random() * 16);
+          // console.log("adding image to hole", random_number)
+          let hole = holes[random_number];
+          let image = document.createElement("img");
+    
+          good_or_bad = Math.floor(Math.random() * good_mole_percentage_inverse);
           if (good_or_bad === 0) {
-            ++good_mole_counter;
-            if (points > 0) {
-            score.html(--points);
-            }
-            // console.log("Don't hit the good mole!")
+            // console.log("making good mole");
+            image.setAttribute("src", "images/good_mole.png");
+            image.setAttribute("class", "good_mole");
           }
           else {
-            ++bad_mole_counter;
-            score.html(++points);
+            // console.log("making bad mole");
+            image.setAttribute("src", "images/bad_mole.png");
+            image.setAttribute("class", "bad_mole");
           }
+          hole.appendChild(image);
           setTimeout(() => {
-            // console.log(e.target.childNodes)
-            e.target.removeChild(e.target.childNodes[0]);
-          }, 100); 
-        }
-      }) 
+              // console.log("in timeout!", hole)
+              if (hole.childNodes.length > 0) {
+                console.log("we have a child!", hole.childNodes[0])
+                hole.removeChild(hole.childNodes[0]);
+                // console.log("deleted child", hole.childNodes)
+              }
+          }, time_before_mole_disappeares); 
+          
+        }, 1600);
+    
+    
+        window.addEventListener("click", (e) => {
+          console.log("target",e.target)
+          if (e.target.children.length > 0) {
+            if (good_or_bad === 0) {
+              ++good_mole_counter;
+              if (points > 0) {
+              score.html(--points);
+              }
+              // console.log("Don't hit the good mole!")
+            }
+            else {
+              ++bad_mole_counter;
+              score.html(++points);
+            }
+            setTimeout(() => {
+              // console.log(e.target.childNodes)
+              e.target.removeChild(e.target.childNodes[0]);
+            }, 100); 
+          }
+        })
+      //}, 30000);
+      
     }
-    //if game is currently in play
+    /*
+    //if game has been started and user wants to pause:
+    else if(startedGame == true && playing == true){
+
+    }
+    //if game has been started, paused, and now user wants to resume:
     else{
-      console.log("pausing gameplay...");
-      playing = true;      
-      //clearInterval(startGame);
-    }
+      console.log("pausing gameplay...");   
+      clearInterval(startGame); 
+    }*/
   });
 }) 
 
