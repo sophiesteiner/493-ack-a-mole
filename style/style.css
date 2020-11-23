@@ -37,7 +37,9 @@
     font-size: 18px;
 }
 
-.play_area{
+#play_area{
+    height: 700px;
+    width: 100%;
     position: absolute;
 }
 .settings_panel {
@@ -149,9 +151,11 @@
 }
 
 .holes {
+    position: relative;
+    top: 250px;
     display: grid;
     grid-template-columns: repeat(4, .5fr);
-    grid-gap: 1em;
+    grid-gap: 3.5em;
     justify-items: center;
 }
 
@@ -172,7 +176,7 @@
     left: 50%;
     transform: translateX(-50%);
     animation: appear_good 0.8s linear;
-    pointer-events: none;
+    /* pointer-events: none; */
 }
 
 .bad_mole {
@@ -183,7 +187,7 @@
     left: 50%;
     transform: translateX(-50%);
     animation: appear_bad 0.8s linear;
-    pointer-events: none;
+    /* pointer-events: none; */
 }
 
 @keyframes appear_good {
@@ -219,9 +223,49 @@ body {
 
 .pointsClass {
     font-size: 30px;
-    color: azure;
+    color: chartreuse;
     font-family: 'Press Start 2P', cursive;
     text-align: center;
     padding-top: 20px;
     z-index: 500;
+}
+
+.flying_points {
+    position: fixed;
+}
+
+#flying_mole_div {
+    position: relative;
+    top: 0px;
+    left: 0px;
+    z-index: 4;
+}   
+
+.flying_mole {
+    position: absolute;
+    z-index: 4;
+    top: 0px;
+    left: 0px;
+    animation: fly_across 5s linear;
+    width: 200px;
+    height: 120px;
+}
+
+@keyframes fly_across {
+    0% {
+        top: 40;
+        left: -400;
+    }
+    33% {
+        left: 400;
+        top: 500;
+    }
+    66% {
+        left: 800;
+        top: 50;
+    }
+    100% {
+        left: 1800;
+        top: 350;
+    }
 }

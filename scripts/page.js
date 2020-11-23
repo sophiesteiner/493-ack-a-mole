@@ -8,6 +8,7 @@ let bad_mole_fname = "images/bad_mole.png";
 let good_or_bad;
 let good_mole_counter = 0;
 let bad_mole_counter = 0;
+let mole_id = 0;
 let time_before_mole_disappeares = 3600;
 let good_mole_percentage_inverse = -1;
 
@@ -151,32 +152,32 @@ $(document).ready( function(){
   $("#begin_game").click(() => {
     //make note of time input
     time_remaining = document.getElementById("yay_time").value;
-    console.log("user gameplay length: ", time_remaining);
+    // console.log("user gameplay length: ", time_remaining);
     timer.html(time_remaining);
     
     // fade settings out
     $('.settings_panel').fadeOut();
     
     //begin game
-    console.log("beginning gameplay...");
+    // console.log("beginning gameplay...");
     startedGame = true;
     playing = true;
 
     if (current_difficulty === "hard") {
       time_before_mole_disappeares = 1000;
-      good_mole_percentage_inverse = 2;
+      good_mole_percentage_inverse = 3;
     } else if (current_difficulty === "medium") {
       time_before_mole_disappeares = 2400;
-      good_mole_percentage_inverse = 3;
+      good_mole_percentage_inverse = 4;
     }
 
     session();
   });
 
   $("#pause_play").click(function() {
-    console.log("clicked play/pause")
+    // console.log("clicked play/pause")
     if(startedGame == true && playing == true){
-      console.log("pausing gameplay...");   
+      // console.log("pausing gameplay...");   
       playing = false;
       clearInterval(startGame); 
       clearInterval(countdownTimer);
@@ -184,7 +185,7 @@ $(document).ready( function(){
 
     //if game has been started, paused, and now user wants to resume:
     else{
-      console.log("resuming gameplay...");
+      // console.log("resuming gameplay...");
       playing = true;
       session();
     }
@@ -203,63 +204,87 @@ $(document).ready( function(){
     }, 1000);
 
     startGame = setInterval(() => {
-      let random_number = Math.floor(Math.random() * 16);
-      // console.log("adding image to hole", random_number)
-      let hole = holes[random_number];
+    
       let image = document.createElement("img");
 
-      good_or_bad = Math.floor(Math.random() * good_mole_percentage_inverse);
-      if (good_or_bad === 0) {
+      mole_type_int = Math.floor(Math.random() * good_mole_percentage_inverse);
+      mole_in_plane = false;
+      if (mole_type_int === 0) {
         // console.log("making good mole");
         image.setAttribute("src", "images/good_mole.png");
         image.setAttribute("class", "good_mole");
       }
-      else {
+      else if (mole_type_int === 2) {
+        mole_in_plane = true;
+        image.setAttribute("src", "images/mole-in-plane.png");
+        image.setAttribute("class", "flying_mole");
+      } else {
         // console.log("making bad mole");
         image.setAttribute("src", "images/bad_mole.png");
         image.setAttribute("class", "bad_mole");
       }
-      hole.appendChild(image);
+
+      let my_mole_id = mole_id;
+      image.setAttribute("id", "moleNum"+String(my_mole_id));
+      mole_id += 1;
+      
+      time_to_wait = time_before_mole_disappeares;
+      let div_to_add_mole_to;
+      if (mole_in_plane) {
+        div_to_add_mole_to = document.querySelectorAll("#flying_mole_div")[0];
+        time_to_wait = 4500;
+      } else {
+        let random_number = Math.floor(Math.random() * 16);
+        // console.log("adding image to hole", random_number)
+        div_to_add_mole_to = holes[random_number];
+      }
+      div_to_add_mole_to.appendChild(image);
+
       setTimeout(() => {
-          
-          if (hole.childNodes && hole.childNodes.length > 0 && hole.childNodes[0].tagName == "IMG") {
-            
-            hole.removeChild(hole.childNodes[0]);
+        let child = document.getElementById("moleNum"+String(my_mole_id));
+          if (child) {
+            div_to_add_mole_to.removeChild(child);
             // console.log("deleted child", hole.childNodes)
           }
-      }, time_before_mole_disappeares); 
+      }, time_to_wait); 
       
     }, 1600);
 
 
     window.addEventListener("click", (e) => {
-      console.log("target",e.target)
-      if (e.target.classList.contains("hole") && e.target.children.length > 0) {
+      // console.log("target",e.target)
+      let child = e.target;
+      let childId = e.target.id;
+      let parent = child.parentNode;
+      
+      if (childId.includes("moleNum")) {
         let pointsIncrementDisplay = document.createElement("div");
-        if (e.target.childNodes[0].classList.contains("good_mole")) {
+        if (child.classList.contains("good_mole")) {
           ++good_mole_counter;
           points -= 10
           score.html(points);
           
           pointsIncrementDisplay.innerHTML = "-10";
-          // console.log("Don't hit the good mole!")
-        } else if(e.target.childNodes[0].classList.contains("bad_mole")) {
+        } else if(child.classList.contains("bad_mole") || child.classList.contains("flying_mole")) {
           ++bad_mole_counter;
           points += 10
           score.html(points);
           pointsIncrementDisplay.innerHTML = "+10";
         }
         pointsIncrementDisplay.setAttribute("class", "pointsClass");
-        e.target.appendChild(pointsIncrementDisplay);
+        if (child.classList.contains("flying_mole")) {
+          pointsIncrementDisplay.setAttribute("class", "pointsClass flying_points");
+          pointsIncrementDisplay.style.left = String(parseInt(window.getComputedStyle(child).left) + 40) + "px";
+          pointsIncrementDisplay.style.top = String(parseInt(window.getComputedStyle(child).top) + 150) + "px";
+          
+        }
+        parent.appendChild(pointsIncrementDisplay);
 
         setTimeout(() => {
-          console.log("first deleting:",e.target.childNodes)
-          e.target.removeChild(e.target.childNodes[0]);
+          parent.removeChild(child)
         }, 100);
-        
         setTimeout(() => {
-          console.log("second delete:",e.target, e.target.childNodes)
-          e.target.removeChild(e.target.childNodes[0]);
+          parent.removeChild(pointsIncrementDisplay);
         }, 1000);
       }
     });
