@@ -122,6 +122,7 @@ $(document).ready( function(){
 
   
   var audio = new Audio("images/Funny-background-music-for-games.mp3");
+  var whack = new Audio("images/mole_hit.mp3");
 
   $("#sound_toggle").click(function() {
     if (audio.paused) {
@@ -266,6 +267,7 @@ $(document).ready( function(){
       
       if (childId.includes("moleNum")) {
         let pointsIncrementDisplay = document.createElement("div");
+        whack.play();
         if (child.classList.contains("good_mole")) {
           ++good_mole_counter;
           points -= 10
