@@ -191,15 +191,19 @@ $(document).ready( function(){
     }
   });
 
-  //gameplay controller
+  //GAMEPLAY SESSION STUFF
   function session(){
     //countdown time til end
     countdownTimer = setInterval(() => {
       --time_remaining;
       timer.html(time_remaining);
+      
+      //reset timer, points, show settings panel
       if(time_remaining == 0){
-        clearInterval(startGame);
+        clearInterval(startGame);        
         $('.settings_panel').fadeIn();
+        points = 0;
+        score.html(points);
         clearInterval(countdownTimer);
       }
     }, 1000);
