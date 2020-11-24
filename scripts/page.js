@@ -199,6 +199,7 @@ $(document).ready( function(){
       timer.html(time_remaining);
       if(time_remaining == 0){
         clearInterval(startGame);
+        $('.settings_panel').fadeIn();
         clearInterval(countdownTimer);
       }
     }, 1000);
