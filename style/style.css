@@ -269,3 +269,19 @@ body {
         top: 350;
     }
 }
+
+.countdown_timer {
+    position: relative;
+    left: 550px;
+    font-family: "Impact", Charcoal, sans-serif;
+    font-size: 30px;
+    color: blue;
+}
+
+.score {
+    position: relative;
+    left: 600px;
+    font-family: "Impact", Charcoal, sans-serif;
+    font-size: 30px;
+    color: blue;
+}
