@@ -1,8 +1,8 @@
 // GLOBALS
 
 //upload globals
-let good_mole_fname = "images/good_mole.png";
-let bad_mole_fname = "images/bad_mole.png";
+let good_mole_file = "images/good_mole.png";
+let bad_mole_file = "images/bad_mole.png";
 
 //game globals
 let good_or_bad;
@@ -95,6 +95,7 @@ $(document).ready( function(){
 
       reader.addEventListener("load", function () {
         $('#img1').attr('src', this.result);
+        good_mole_file = this.result;
       });
 
       reader.readAsDataURL(good_file_obj);
@@ -110,6 +111,7 @@ $(document).ready( function(){
 
       reader.addEventListener("load", function () {
         $('#img2').attr('src', this.result);
+        bad_mole_file = this.result;
       });
 
       reader.readAsDataURL(bad_file_obj);
@@ -216,7 +218,7 @@ $(document).ready( function(){
       mole_in_plane = false;
       if (mole_type_int === 0) {
         // console.log("making good mole");
-        image.setAttribute("src", "images/good_mole.png");
+        image.setAttribute("src", good_mole_file);
         image.setAttribute("class", "good_mole");
       }
       else if (mole_type_int === 2) {
@@ -225,7 +227,7 @@ $(document).ready( function(){
         image.setAttribute("class", "flying_mole");
       } else {
         // console.log("making bad mole");
-        image.setAttribute("src", "images/bad_mole.png");
+        image.setAttribute("src", bad_mole_file);
         image.setAttribute("class", "bad_mole");
       }
 
