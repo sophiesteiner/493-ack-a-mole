@@ -182,8 +182,11 @@ $(document).ready( function(){
     if(startedGame == true && playing == true){
       // console.log("pausing gameplay...");   
       playing = false;
+
+      
       clearInterval(startGame); 
       clearInterval(countdownTimer);
+
     }
 
     //if game has been started, paused, and now user wants to resume:
@@ -191,6 +194,45 @@ $(document).ready( function(){
       // console.log("resuming gameplay...");
       playing = true;
       session();
+    }
+  });
+  
+  window.addEventListener("click", (e) => {
+    // console.log("target",e.target)
+    let child = e.target;
+    let childId = e.target.id;
+    let parent = child.parentNode;
+    
+    if (childId.includes("moleNum")) {
+      let pointsIncrementDisplay = document.createElement("div");
+      whack.play();
+      if (child.classList.contains("good_mole")) {
+        ++good_mole_counter;
+        points -= 10
+        score.html(points);
+        
+        pointsIncrementDisplay.innerHTML = "-10";
+      } else if(child.classList.contains("bad_mole") || child.classList.contains("flying_mole")) {
+        ++bad_mole_counter;
+        points += 10
+        score.html(points);
+        pointsIncrementDisplay.innerHTML = "+10";
+      }
+      pointsIncrementDisplay.setAttribute("class", "pointsClass");
+      if (child.classList.contains("flying_mole")) {
+        pointsIncrementDisplay.setAttribute("class", "pointsClass flying_points");
+        pointsIncrementDisplay.style.left = String(parseInt(window.getComputedStyle(child).left) + 40) + "px";
+        pointsIncrementDisplay.style.top = String(parseInt(window.getComputedStyle(child).top) + 150) + "px";
+        
+      }
+      parent.appendChild(pointsIncrementDisplay);
+
+      setTimeout(() => {
+        parent.removeChild(child)
+      }, 100);
+      setTimeout(() => {
+        parent.removeChild(pointsIncrementDisplay);
+      }, 1000);
     }
   });
 
@@ -201,12 +243,12 @@ $(document).ready( function(){
       --time_remaining;
       timer.html(time_remaining);
       
-      //reset timer, points, show settings panel
+      //END OF GAME: reset timer, points, show settings panel
       if(time_remaining == 0){
         clearInterval(startGame);        
         $('.settings_panel').fadeIn();
         points = 0;
-        score.html(points);
+        score.html(points);        
         clearInterval(countdownTimer);
       }
     }, 1000);
@@ -257,46 +299,6 @@ $(document).ready( function(){
       }, time_to_wait); 
       
     }, 1600);
-
-
-    window.addEventListener("click", (e) => {
-      // console.log("target",e.target)
-      let child = e.target;
-      let childId = e.target.id;
-      let parent = child.parentNode;
-      
-      if (childId.includes("moleNum")) {
-        let pointsIncrementDisplay = document.createElement("div");
-        whack.play();
-        if (child.classList.contains("good_mole")) {
-          ++good_mole_counter;
-          points -= 10
-          score.html(points);
-          
-          pointsIncrementDisplay.innerHTML = "-10";
-        } else if(child.classList.contains("bad_mole") || child.classList.contains("flying_mole")) {
-          ++bad_mole_counter;
-          points += 10
-          score.html(points);
-          pointsIncrementDisplay.innerHTML = "+10";
-        }
-        pointsIncrementDisplay.setAttribute("class", "pointsClass");
-        if (child.classList.contains("flying_mole")) {
-          pointsIncrementDisplay.setAttribute("class", "pointsClass flying_points");
-          pointsIncrementDisplay.style.left = String(parseInt(window.getComputedStyle(child).left) + 40) + "px";
-          pointsIncrementDisplay.style.top = String(parseInt(window.getComputedStyle(child).top) + 150) + "px";
-          
-        }
-        parent.appendChild(pointsIncrementDisplay);
-
-        setTimeout(() => {
-          parent.removeChild(child)
-        }, 100);
-        setTimeout(() => {
-          parent.removeChild(pointsIncrementDisplay);
-        }, 1000);
-      }
-    });
   }
   // Found at https://gist.github.com/trentmwillis/2199d6d191000b8d8f40
   (function() {
