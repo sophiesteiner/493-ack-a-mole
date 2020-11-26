@@ -222,10 +222,14 @@ $(document).ready( function(){
         
         pointsIncrementDisplay.innerHTML = "-10";
       } else if(child.classList.contains("bad_mole") || child.classList.contains("flying_mole")) {
+        points_incr = 10;
+        if (child.classList.contains("flying_mole")) {
+          points = 30;
+        }
         ++bad_mole_counter;
-        points += 10
+        points += points_incr;
         score.html(points);
-        pointsIncrementDisplay.innerHTML = "+10";
+        pointsIncrementDisplay.innerHTML = "+"+String(points_incr);
       }
       pointsIncrementDisplay.setAttribute("class", "pointsClass");
       if (child.classList.contains("flying_mole")) {
