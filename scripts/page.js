@@ -224,7 +224,7 @@ $(document).ready( function(){
       } else if(child.classList.contains("bad_mole") || child.classList.contains("flying_mole")) {
         points_incr = 10;
         if (child.classList.contains("flying_mole")) {
-          points = 30;
+          points_incr = 30;
         }
         ++bad_mole_counter;
         points += points_incr;
@@ -260,6 +260,7 @@ $(document).ready( function(){
       if(time_remaining == 0){
         clearInterval(startGame);        
         $('.settings_panel').fadeIn();
+        $("#begin_game").html("Play again");
         points = 0;
         score.html(points);        
         clearInterval(countdownTimer);
