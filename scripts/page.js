@@ -11,6 +11,7 @@ let bad_mole_counter = 0;
 let mole_id = 0;
 let time_before_mole_disappeares = 3600;
 let good_mole_percentage_inverse = -1;
+let sound_off = true;
 
 //settings globals
 let current_difficulty = "easy";
@@ -127,9 +128,11 @@ $(document).ready( function(){
   $("#sound_toggle").click(function() {
     if (audio.paused) {
       audio.play();
+      sound_off = false;
       $("#sound_toggle img").attr("src", "images/vol_on.png");
     } else {
       audio.pause();
+      sound_off = true;
       $("#sound_toggle img").attr("src", "images/vol_off.png");
     }
 
@@ -178,9 +181,12 @@ $(document).ready( function(){
   });
 
   $("#pause_play").click(function() {
-    // console.log("clicked play/pause")
+    
     if(startedGame == true && playing == true){
-      // console.log("pausing gameplay...");   
+      // console.log("pausing gameplay..."); 
+      
+      $("#pause_play img").attr("src", "images/play_button.png");
+      
       playing = false;
 
       
@@ -193,6 +199,7 @@ $(document).ready( function(){
     else{
       // console.log("resuming gameplay...");
       playing = true;
+      $("#pause_play img").attr("src", "images/pause_button.png");
       session();
     }
   });
@@ -205,7 +212,9 @@ $(document).ready( function(){
     
     if (childId.includes("moleNum")) {
       let pointsIncrementDisplay = document.createElement("div");
-      whack.play();
+      if (!sound_off) {
+        whack.play();
+      }
       if (child.classList.contains("good_mole")) {
         ++good_mole_counter;
         points -= 10
