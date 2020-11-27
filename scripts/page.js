@@ -59,6 +59,8 @@ $(document).ready( function(){
   let holes = document.querySelectorAll(".hole");
   let score = $(".score span");
   let points = 0;
+
+  $("#paused_sign").fadeOut();
   
   $("#easy").click(() => {
     //reset old selected
@@ -188,8 +190,8 @@ $(document).ready( function(){
       $("#pause_play img").attr("src", "images/play_button.png");
       
       playing = false;
+      $("#paused_sign").fadeIn();
 
-      
       clearInterval(startGame); 
       clearInterval(countdownTimer);
 
@@ -199,6 +201,7 @@ $(document).ready( function(){
     else{
       // console.log("resuming gameplay...");
       playing = true;
+      $("#paused_sign").fadeOut();
       $("#pause_play img").attr("src", "images/pause_button.png");
       session();
     }
