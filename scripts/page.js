@@ -91,8 +91,9 @@ $(document).ready( function(){
     $('#'+current_difficulty).css('border-color',selected_color);
   });
   
-  $('#good_img_in').click(() => {
-    let good_file_obj = $('#good_file').prop('files')[0];
+  $('#good_file').change(function() {
+    let good_file_obj = this.files[0];
+
     if(good_file_obj){
       const reader = new FileReader();
 
@@ -102,6 +103,7 @@ $(document).ready( function(){
       });
 
       reader.readAsDataURL(good_file_obj);
+
     }
 
     good_mole_fname = $('#good_file').prop('files')[0].name;
