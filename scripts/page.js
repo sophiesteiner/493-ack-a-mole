@@ -13,7 +13,6 @@ let time_before_mole_disappeares = 3600;
 let good_mole_percentage_inverse = -1;
 let sound_off = true;
 //let div_to_add_mole_to;
-let random_number;
 
 //settings globals
 let current_difficulty = "easy";
@@ -307,7 +306,7 @@ $(document).ready( function(){
       let my_mole_id = mole_id;
       image.setAttribute("id", "moleNum"+String(my_mole_id));
       mole_id += 1;
-      
+      let random_number;
       time_to_wait = time_before_mole_disappeares;
       //let div_to_add_mole_to;
       if (mole_in_plane) {
