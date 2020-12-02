@@ -110,8 +110,9 @@ $(document).ready( function(){
     good_mole_fname = $('#good_file').prop('files')[0].name;
   });
 
-  $('#bad_img_in').click(() => {
-    let bad_file_obj = $('#bad_file').prop('files')[0];
+  $('#bad_file').change(function() {
+    let bad_file_obj = this.files[0];
+    
     if(bad_file_obj){
       const reader = new FileReader();
 
