@@ -12,6 +12,7 @@ let mole_id = 0;
 let time_before_mole_disappeares = 3600;
 let good_mole_percentage_inverse = -1;
 let sound_off = true;
+//let div_to_add_mole_to;
 
 //settings globals
 let current_difficulty = "easy";
@@ -196,7 +197,16 @@ $(document).ready( function(){
 
       clearInterval(startGame); 
       clearInterval(countdownTimer);
-
+      //remove all moles currently visible:
+      var i;
+      while(document.querySelectorAll("#flying_mole_div")[0].firstChild){
+        document.querySelectorAll("#flying_mole_div")[0].removeChild(document.querySelectorAll("#flying_mole_div")[0].firstChild);
+      }
+      for(i = 0; i < holes.length; i++) {
+        while (holes[i].firstChild){
+          holes[i].removeChild(holes[i].firstChild);
+        }      
+      }
     }
 
     //if game has been started, paused, and now user wants to resume:
@@ -296,25 +306,29 @@ $(document).ready( function(){
       let my_mole_id = mole_id;
       image.setAttribute("id", "moleNum"+String(my_mole_id));
       mole_id += 1;
-      
+      let random_number;
       time_to_wait = time_before_mole_disappeares;
-      let div_to_add_mole_to;
+      //let div_to_add_mole_to;
       if (mole_in_plane) {
-        div_to_add_mole_to = document.querySelectorAll("#flying_mole_div")[0];
+        //div_to_add_mole_to = document.querySelectorAll("#flying_mole_div")[0];
         time_to_wait = 4500;
+        document.querySelectorAll("#flying_mole_div")[0].appendChild(image);
       } else {
-        let random_number = Math.floor(Math.random() * 16);
-        // console.log("adding image to hole", random_number)
-        div_to_add_mole_to = holes[random_number];
+        random_number = Math.floor(Math.random() * 16);
+        //div_to_add_mole_to = holes[random_number];
+        holes[random_number].appendChild(image);
       }
-      div_to_add_mole_to.appendChild(image);
+      //div_to_add_mole_to.appendChild(image);
 
-      setTimeout(() => {
-        let child = document.getElementById("moleNum"+String(my_mole_id));
-          if (child) {
-            div_to_add_mole_to.removeChild(child);
-            // console.log("deleted child", hole.childNodes)
-          }
+      setTimeout(function() {            
+        if(holes[random_number].hasChildNodes() == true) {
+          let child = document.getElementById("moleNum"+String(my_mole_id));
+            //div_to_add_mole_to.removeChild(child);
+            console.log("inside if");
+            console.log(holes[random_number]);
+            console.log(holes[random_number].firstChild);
+          holes[random_number].removeChild(child);
+        }
       }, time_to_wait); 
       
     }, 1600);
@@ -432,4 +446,3 @@ $(document).ready( function(){
     setup();
   }());
 }) 
-
