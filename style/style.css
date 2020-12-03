@@ -1,6 +1,7 @@
 #splash_screen{
     /*source: https://www.youtube.com/watch?v=MOlaldp1Fv4*/
     position: fixed;
+    display: flex;
     top: 0;
     left: 0;
     width: 100%;
@@ -9,10 +10,15 @@
     z-index: 1001;
     color: rgb(55, 105, 112);
     opacity: 1;
+    justify-content: space-around;
 }
 
 #center_box {
     display: flex;
+    margin-top: 140px;
+    margin-bottom: 100px;
+    padding-left: 30px;
+    padding-right: 30px;
     align-items: center;
     flex-direction: column;
     text-align: center;
@@ -20,13 +26,18 @@
     border-style: solid;
     border-width: 3px;
     border-color: #2C4762;
-    background-color:rgb(222, 234, 236, 0.7);
-    margin-left: 200px;
-    margin-right: 200px;
-    border-radius: 5px;
+    background-color:rgb(222, 234, 236, 0.8);
+  
+    border-radius: 12px;
+}
+
+#welcome{
+    font-family: 'Concert One';
+    font-size: 90px;
 }
 
 #authors{
+    font-family: sans-serif;
     font-size: 18px;
 }
 
