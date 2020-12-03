@@ -62,6 +62,7 @@ $(document).ready( function(){
   let points = 0;
 
   $("#paused_sign").fadeOut();
+  $("#final_score").fadeOut();
   
   $("#easy").click(() => {
     //reset old selected
@@ -130,6 +131,8 @@ $(document).ready( function(){
   
   var audio = new Audio("images/Funny-background-music-for-games.mp3");
   var whack = new Audio("images/mole_hit.mp3");
+  var squeak = new Audio("images/mole_squeak.mp3");
+  var plane = new Audio("images/plane_fly.mp3");
 
   $("#sound_toggle").click(function() {
     if (audio.paused) {
@@ -228,18 +231,23 @@ $(document).ready( function(){
     
     if (childId.includes("moleNum")) {
       let pointsIncrementDisplay = document.createElement("div");
-      if (!sound_off) {
-        whack.play();
-      }
       if (child.classList.contains("good_mole")) {
         ++good_mole_counter;
         points -= 10
         score.html(points);
-        
+        if (!sound_off) {
+          squeak.play();
+        }
         pointsIncrementDisplay.innerHTML = "-10";
       } else if(child.classList.contains("bad_mole") || child.classList.contains("flying_mole")) {
         points_incr = 10;
+        if (!sound_off) {
+          whack.play();
+        }
         if (child.classList.contains("flying_mole")) {
+            if (!sound_off) {
+              plane.pause();
+            }
           points_incr = 30;
         }
         ++bad_mole_counter;
@@ -274,9 +282,18 @@ $(document).ready( function(){
       
       //END OF GAME: reset timer, points, show settings panel
       if(time_remaining == 0){
+        $("#final_score").fadeIn();
+        $("#final_score span").text(points);
+        setTimeout(() => { 
+          $("#final_score").fadeOut();  
+        }, 2000);
         clearInterval(startGame);        
         $('.settings_panel').fadeIn();
         $("#begin_game").html("Play again");
+        // If the final score is better than the high score, resets on refresh
+        if (parseInt(points) > parseInt($('#high_score span').text())) {
+          $("#high_score span").text(points);
+        }
         points = 0;
         score.html(points);        
         clearInterval(countdownTimer);
@@ -312,6 +329,9 @@ $(document).ready( function(){
       //let div_to_add_mole_to;
       if (mole_in_plane) {
         //div_to_add_mole_to = document.querySelectorAll("#flying_mole_div")[0];
+        if (!sound_off) {
+          plane.play();
+        }
         time_to_wait = 4500;
         document.querySelectorAll("#flying_mole_div")[0].appendChild(image);
       } else {
@@ -325,9 +345,9 @@ $(document).ready( function(){
         if(holes[random_number].hasChildNodes() == true) {
           let child = document.getElementById("moleNum"+String(my_mole_id));
             //div_to_add_mole_to.removeChild(child);
-            console.log("inside if");
-            console.log(holes[random_number]);
-            console.log(holes[random_number].firstChild);
+            //console.log("inside if");
+            //console.log(holes[random_number]);
+            //console.log(holes[random_number].firstChild);
           holes[random_number].removeChild(child);
         }
       }, time_to_wait); 
